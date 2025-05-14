@@ -1,0 +1,44 @@
+; 777messages.txt — welcome messages in 5 languages
+[welcome]
+
+  
+#en = 
+<div class="welcome-content">
+<h3 style="font-weight=normal">Welcome back</h3>
+<p>In our changing world, speaking <strong>just English isn't enough</strong>.</p>
+<p>Open new doors with skills in <strong>another world language</strong>.</p>
+<p>Start with 7 words a day.</p>
+</div>
+ 
+#de 
+<div class="welcome-content">
+<h3>Welcome back</h3>
+<p>In unserer sich verändernden Welt ist <strong>Englisch allein nicht ausreichend</strong>.</p>
+<p>Eröffne neue Türen mit Kenntnissen in <strong>einer weiteren Weltsprache</strong>.</p>
+<p>Beginne mit 7 Wörtern pro Tag.</p>
+</div>
+ 
+#es 
+<div class="welcome-content">
+<h3>Welcome back</h3>
+<p>En nuestro mundo cambiante, hablar <strong>solo inglés ya no es suficiente</strong>.</p>
+<p>Abre nuevas puertas con conocimientos de <strong>otro idioma global</strong>.</p>
+<p>Empieza con 7 palabras al día.</p>
+</div>
+ 
+#fr 
+<div class="welcome-content">
+<h3>Welcome back</h3>
+<p>Dans notre monde en évolution, parler <strong>seulement anglais ne suffit plus</strong>.</p>
+<p>Ouvrez de nouvelles portes grâce à des compétences dans <strong>une autre langue mondiale</strong>.</p>
+<p>Apprenez 7 mots chaque jour.</p>
+</div>
+ 
+#it 
+<div class="welcome-content">
+<h3>Welcome back</h3>
+<p>Nel nostro mondo in evoluzione, parlare <strong>solo inglese non è più sufficiente</strong>.</p>
+<p>Apri nuove porte con competenze in <strong>un'altra lingua mondiale</strong>.</p>
+<p>Impara 7 parole al giorno.</p>
+</div>
+ 

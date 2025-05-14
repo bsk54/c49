@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>C49</title>
+
+  <!-- Stylesheet -->
+  <link rel="stylesheet" href="777.css">
+
+  <!-- External libraries -->
+  <script defer src="https://unpkg.com/papaparse@5.4.1/papaparse.min.js"></script>
+
+  <!-- App logic -->
+  <script defer src="777.js"></script>
+</head>
+<body>
+  <!-- Info Modal -->
+  <div id="infoModal">
+    <div class="modal-content">
+      <button aria-label="Close" class="close-btn" id="infoCloseBtn">×</button>
+      <div id="infoBody"></div>
+    </div>
+  </div>
+
+  <div class="app">
+    <header class="header">
+      <div>C49</div>
+      <div class="value-display">1/1</div>
+      <div class="controls-right">
+        <select id="langSelect">
+          <option value="de">DE</option>
+          <option value="en">EN</option>
+          <option value="es">ES</option>
+          <option value="fr">FR</option>
+          <option value="it">IT</option>
+        </select>
+        <div class="menu-container">
+          <button aria-label="Menu" class="hamburger-btn" id="hamburgerBtn">☰</button>
+          <nav class="menu" id="hamburgerMenu" role="menu">
+            <ul>
+              <li role="menuitem">Auto-play Next</li>
+              <li role="menuitem">Font Size</li>
+              <li role="menuitem">Keyboard Shortcuts</li>
+              <li role="menuitem">Pause Length</li>
+              <li role="menuitem">Reset to Defaults</li>
+              <li role="menuitem">Save localStorage to file</li>
+              <li role="menuitem">Retrieve localStorage from file</li>
+              <li role="menuitem">Speech Speed</li>
+              <li role="menuitem">Theme (Light / Dark)</li>
+              <li class="separator"></li>
+              <li role="menuitem">About</li>
+            </ul>
+          </nav>
+        </div>
+      </div>
+    </header>
+
+    <div class="wheel-area">
+      <button aria-label="Previous" class="nav-btn prev">−</button>
+      <div class="counter"></div>
+      <button aria-label="Next" class="nav-btn next">+</button>
+    </div>
+
+    <main class="content">
+      <nav class="tabs">
+        <button class="tab words">Words</button>
+        <button class="tab phrases">Phrases</button>
+        <button class="tab quiz">Quiz</button>
+        <button class="tab forty-nine">49er</button>
+        <button class="tab grammar">Info</button>
+      </nav>
+
+      <!-- default flash-card panel -->
+      <section class="card-display"></section>
+
+      <!-- Quiz Settings panel (hidden until you click Quiz) -->
+      <section id="qu-settingsPanel" class="quiz-settings-panel" style="display: none;">
+        <div class="section-header" style="margin-top:15px">Quiz</div>
+        
+        <div class="qu-actions">
+          <button class="pl-start-btn" id="qu-startBtn">Start</button>
+        </div>
+        <div class="pl-playToggleGrid qu-toggle-grid">
+          <!-- TYPE: Words or Phrases -->
+          <div class="pl-toggle-box">
+            <div class="pl-label">TYPE</div>
+            <div class="pl-segmented" id="qu-contentControl">
+              <button class="pl-pill" data-value="1">W</button>
+              <button class="pl-pill" data-value="2">P</button>
+            </div>
+          </div>
+          <!-- POOL SIZE -->
+          <div class="pl-toggle-box">
+            <div class="pl-label">POOL SIZE</div>
+            <div class="pl-segmented" id="qu-poolControl">
+              <button class="pl-pill" data-value="7">7</button>
+              <button class="pl-pill" data-value="21">21</button>
+              <button class="pl-pill" data-value="49">49</button>
+            </div>
+          </div>
+          <!-- MODE -->
+          <div class="pl-toggle-box">
+            <div class="pl-label">MODE</div>
+            <div class="pl-segmented" id="qu-playModeControl">
+              <button class="pl-pill" data-value="1">汉 → T</button>
+              <button class="pl-pill" data-value="2">T → 汉</button>
+            </div>
+          </div>
+		  
+          <!-- AUDIO -->
+          <div class="pl-toggle-box">
+            <div class="pl-label">AUDIO</div>
+            <div class="pl-segmented" id="qu-audioControl">
+              <button class="pl-pill" id="qu-toggleSpeakQ">Q 🔊</button>
+              <button class="pl-pill" id="qu-toggleSpeakA">A 🔊</button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- QUIZ PLAYBACK OVERLAY (hidden by default) -->
+<!-- QUIZ PLAYBACK OVERLAY -->
+<!-- QUIZ PLAYBACK WINDOW -->
+<div id="qu-playback-window">
+  <!-- Left Area (content) -->
+  <div class="qu-left-area">
+    <!-- Correct / Incorrect counters -->
+<div id="qu-counters" class="qu-counters">
+0&nbsp;/&nbsp;0
+</div>
+
+
+
+
+
+    <!-- Question Area -->
+    <div id="qu-question-area">
+      <!-- Question goes here -->
+    </div>
+
+    <!-- Answer Area -->
+    <div id="qu-answer-area">
+      <!-- Answer goes here -->
+    </div>
+
+    <!-- Picture Area -->
+    <div id="qu-picture-area">
+      <!-- Picture goes here -->
+    </div>
+
+    <!-- Bottom Controls -->
+    <div class="qu-bottom-area">
+      <button class="pl-pill" id="qu-toggleFontSlider" title="Font Slider">F</button>
+      <button class="pl-pill" id="qu-toggleSpeedSlider" title="Speed Slider">S</button>
+	</div>
+  </div>
+
+<!-- Right Area (buttons) -->
+	<div class="qu-right-area">
+
+	  <!-- QUESTION BUTTONS (shown initially) -->
+	  <div id="qu-buttons-question" class="qu-button-area">
+		<button id="qu-showBtn" class="qu-button">Show</button>   <!-- 80% height -->
+		<button id="qu-exitBtn" class="qu-button">Exit</button>   <!-- 20% height -->
+	  </div>
+
+	  <!-- ANSWER BUTTONS (hidden initially) -->
+	  <div id="qu-buttons-answer" class="qu-button-area" style="display: none;">
+		<button id="qu-okBtn"         class="qu-button">OK</button>          <!-- 40% height -->
+		<button id="qu-showAgainBtn"  class="qu-button">Show Again</button>  <!-- 40% height -->
+		<button id="qu-exitAnswerBtn" class="qu-button">Exit</button>        <!-- 20% height -->
+	  </div>
+
+	</div>
+
+
+
+</div>
+
+
+
+
+
+
+      <!-- 49er Playback Module (hidden by default) -->
+      <div id="pl-playback-module" style="display:none;">
+        <section class="pl-settings-panel" id="pl-settingsPanel">
+          <div class="section-header" style="margin-top:15px">49er</div>
+          <!--p class="pl-instruction">
+            Play the Chinese phrases (P) or words (W) and their translation.
+          </p-->
+          <div class="pl-actions-top">
+            <button class="pl-start-btn" id="pl-startBtn">Start</button>
+          </div>
+          <div class="pl-pool-info" id="pl-poolInfo"></div>
+          <div class="pl-selection-tables" id="pl-selectionTables">
+            <div class="section-header">49er Words</div>
+            <table id="pl-wordTable"></table>
+            <div class="section-header">49er Phrases</div>
+            <table id="pl-phraseTable"></table>
+          </div>
+        </section>
+        <section class="pl-playback-window" id="pl-playbackWindow">
+          <button class="pl-close-btn-top"
+                  id="pl-closePlayback"
+                  aria-label="Close Playback">×</button>
+          <div class="pl-playback-area" id="pl-playbackArea"></div>
+          <div class="pl-middle-toolbar" id="pl-middle-toolbar">
+            <div class="pl-primary-controls">
+              <button class="pl-button" id="pl-skipBackBtn" title="Skip Back">⏮</button>
+              <button class="pl-button" id="pl-togglePlayPause" title="Play/Pause">⏸</button>
+              <button class="pl-button" id="pl-skipBtn" title="Skip Forward">⏭</button>
+            </div>
+            <button class="pl-button" id="pl-toggleSpeed" title="Speed">1×</button>
+          </div>
+          <aside class="pl-right-toolbar" id="pl-right-toolbar">
+            <div class="pl-playToggleGrid" id="pl-playToggleGrid">
+              <div class="pl-toggle-box">
+                <div class="pl-label">TYPE</div>
+                <div class="pl-segmented" id="pl-contentControl">
+                  <button data-value="1">W</button>
+                  <button data-value="2">P</button>
+                </div>
+              </div>
+              <div class="pl-toggle-box">
+                <div class="pl-label">ORDER</div>
+                <div class="pl-segmented" id="pl-orderControl">
+                  <button data-value="random">🎲</button>
+                  <button data-value="ordered">🔢</button>
+                </div>
+              </div>
+              <div class="pl-toggle-box">
+                <div class="pl-label">AUDIO</div>
+                <div class="pl-segmented" id="pl-audioControl">
+                  <button id="pl-toggleSpeakQ">Q 🔊</button>
+                  <button id="pl-toggleSpeakA">A 🔊</button>
+                </div>
+              </div>
+              <div class="pl-toggle-box">
+                <div class="pl-label">SEQUENCE</div>
+                <div class="pl-segmented" id="pl-sequenceControl">
+                  <button data-value="1">汉 → T</button>
+                  <button data-value="2">T → 汉</button>
+                </div>
+              </div>
+            </div>
+          </aside>
+          <div class="pl-bottomControls" id="pl-bottomControls">
+            <button class="pl-pill" id="pl-togglePauseSlider" title="Pause Slider">P</button>
+            <button class="pl-pill" id="pl-toggleFontSlider" title="Font Slider">F</button>
+          </div>
+          <div class="pl-bottomSliders" id="pl-bottomSliders">
+            <div class="pl-slider-control" id="pl-pauseControl">
+              <label for="pl-pauseSliderBottom">
+                Pause (s): <span id="pl-pauseValueBottom"></span>
+              </label>
+              <input type="range" id="pl-pauseSliderBottom" min="2.0" max="5.0" step="0.1">
+            </div>
+            <div class="pl-slider-control" id="pl-fontControl">
+              <label for="pl-fontSliderBottom">
+                Font Size (px): <span id="pl-fontValueBottom"></span>
+              </label>
+              <input type="range" id="pl-fontSliderBottom" min="12" max="36" step="1">
+            </div>
+            <div class="pl-slider-control" id="pl-translationControl">
+              <label for="pl-translationSpeedSlider">
+                Translation Speed: <span id="pl-translationSpeedValue"></span>
+              </label>
+              <input type="range" id="pl-translationSpeedSlider" min="0.4" max="1.5" step="0.05" value="1.0">
+            </div>
+          </div>
+        </section>
+      </div>
+    </main>
+
+    <footer>
+      <p>Chinese XXX is a free World Service.</p>
+      <p><a href="privacy.html" target="_blank">Privacy Policy</a></p>
+      <p>© 2025 <a href="https://bsk1.com" target="_blank">BSK</a></p>
+    </footer>
+  </div>
+</body>
+</html>
